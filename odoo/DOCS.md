@@ -1,6 +1,6 @@
 ﻿![Odoo Icon](./icon.png)
 
-![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/WorkingWithEuroOffice/master/www_logo.png)
+![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png)
 
 # Odoo 16 for Home Assistant
 
@@ -33,4 +33,5 @@ Enterprise Resource Planning (ERP) and business applications suite inside Home A
 ## Credits
 This project is maintained and optimized by **Alfonso Vertucci** of **Working With Web**.
 Website: [workingwithweb.it/webagency](https://workingwithweb.it/webagency)
+
 

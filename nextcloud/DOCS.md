@@ -1,6 +1,6 @@
 ﻿![Nextcloud Icon](./icon.png)
 
-![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/WorkingWithEuroOffice/master/www_logo.png)
+![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png)
 
 # Nextcloud + ONLYOFFICE Integration
 
@@ -33,4 +33,5 @@ A powerful Nextcloud instance with OCR capabilities and automatic ONLYOFFICE int
 ## Credits
 This project is maintained and optimized by **Alfonso Vertucci** of **Working With Web**.
 Website: [workingwithweb.it/webagency](https://workingwithweb.it/webagency)
+
 

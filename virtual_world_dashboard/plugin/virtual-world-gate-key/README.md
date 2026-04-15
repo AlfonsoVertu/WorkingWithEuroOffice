@@ -1,4 +1,4 @@
-# Virtual World Gate Key
+﻿# Virtual World Gate Key
 
 Plugin WordPress pensato per girare dentro Home Assistant come middleware:
 
@@ -15,7 +15,7 @@ Plugin WordPress pensato per girare dentro Home Assistant come middleware:
 Header richiesto:
 `x-api-key: <vwgk_api_key>`
 
-### Lettura stato entità HA
+### Lettura stato entitÃ  HA
 `GET /wp-json/vwgk/v1/ha/state?entity_id=light.salone`
 
 ### Chiamata servizio Home Assistant
@@ -47,3 +47,4 @@ Header richiesto:
 ```
 
 Il plugin aggiunge automaticamente `user_code` e Bearer token di WP GPT Automation Pro.
+

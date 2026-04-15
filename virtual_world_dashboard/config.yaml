@@ -1,14 +1,14 @@
-﻿name: "Virtual World Gateway"
+﻿name: "Virtual World Dashboard"
 description: "WordPress-based middleware gateway between AI (GPTs) and Home Assistant."
 version: "1.0.0"
-slug: "vw_gateway"
+slug: "virtual_world_dashboard"
 init: false
 arch:
   - aarch64
   - amd64
 startup: services
 boot: auto
-image: "ghcr.io/alfonsovertu/vw-gateway-{arch}"
+image: "ghcr.io/alfonsovertu/virtual-world-dashboard-{arch}"
 map:
   - config:rw
   - share:rw

@@ -1,6 +1,6 @@
-﻿# WorkingWithEuroOffice - Home Assistant Add-ons
+﻿# virtual_world_gateway_ha - Home Assistant Add-ons
 
-[![Repository](https://img.shields.io/badge/GitHub-WorkingWithEuroOffice-blue?logo=github)](https://github.com/AlfonsoVertu/WorkingWithEuroOffice)
+[![Repository](https://img.shields.io/badge/GitHub-virtual_world_gateway_ha-blue?logo=github)](https://github.com/AlfonsoVertu/virtual_world_gateway_ha)
 
 A collection of Home Assistant add-ons for collaborative document editing using **EuroOffice** (ONLYOFFICE-based Document Server) and **Nextcloud**, with full JWT integration out of the box.
 
@@ -19,7 +19,7 @@ A collection of Home Assistant add-ons for collaborative document editing using 
 2. Click the three-dot menu (top right) → **Repositories**
 3. Paste this URL and click **Add**:
    ```
-   https://github.com/AlfonsoVertu/WorkingWithEuroOffice
+   https://github.com/AlfonsoVertu/virtual_world_gateway_ha
    ```
 4. The add-ons will appear in the store.
 
@@ -86,3 +86,4 @@ All original options from alexbelgium are preserved, plus:
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.
+
