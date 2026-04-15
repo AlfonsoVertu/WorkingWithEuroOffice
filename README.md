@@ -21,11 +21,17 @@ Piattaforma di storage e collaborazione cloud self-hosted. Questa versione inclu
 ### 💼 Odoo 16
 Suite ERP completa: CRM, contabilità, vendite, inventario e molto altro. Si connette al database PostgreSQL esterno. 
 
+### 🗄️ PostgreSQL 17 (con VectorChord)
+Database relazionale altamente performante, ottimizzato anche per funzionalità di embedding vettoriali. È essenziale come backend database per l''istanza di Odoo 16 inclusa.
+
 ### 🔐 Nginx Proxy Manager
 Gestione proxy inversi con supporto SSL automatico (Let''s Encrypt). 
 
 ### 🛡️ AdGuard Home
 DNS server con blocco di pubblicità, tracker e malware a livello di rete. 
+
+### 🕵️ Arpspoof
+Strumento di sicurezza per LAN, permette l''ARP spoofing per simulazione del traffico ed eventuale disconnessione mirata dei dispositivi nel perimetro domestico protetto.
 
 ### 🔍 Elasticsearch
 Motore di ricerca e analisi dati distribuito. 
@@ -45,7 +51,7 @@ Motore di ricerca e analisi dati distribuito.
 
 Questo repository è sviluppato e mantenuto da **Alfonso Vertucci** — [Working With Web](https://workingwithweb.it/webagency/).
 
-I singoli add-on si basano su software open source mantenuti dai rispettivi autori originali (Nextcloud, Odoo S.A., Elastic, AdGuard Team, Frenck/hassio-addons). Ogni componente rispetta la propria licenza upstream.
+I singoli add-on si basano su software open source mantenuti dai rispettivi autori originali (Nextcloud, Odoo S.A., Elastic, AdGuard Team, Frenck/hassio-addons, alexbelgium). Ogni componente rispetta la propria licenza upstream.
 
 - 🔗 [Virtual Gate Project](https://virtualgate.workingwithweb.eu/)
 - 🔗 [WP GPT Automation Pro](https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/)
