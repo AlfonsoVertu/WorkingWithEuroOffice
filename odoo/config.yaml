@@ -1,0 +1,38 @@
+﻿name: "Odoo 16"
+description: "Open-source ERP and business applications suite (Odoo 16.0)."
+version: "1.0.0"
+slug: "odoo"
+init: false
+arch:
+  - aarch64
+  - amd64
+startup: services
+boot: auto
+image: "ghcr.io/alfonsovertu/odoo-{arch}"
+map:
+  - config:rw
+  - share:rw
+options:
+  master_password: "CHANGEME"
+  db_host: "192.168.1.56"
+  db_port: 5432
+  db_user: "vash"
+  db_password: "__Snappade0__"
+  db_name: "nextcloud"
+  list_db: true
+  proxy_mode: true
+schema:
+  master_password: password
+  db_host: str
+  db_port: int
+  db_user: str
+  db_password: password
+  db_name: str
+  list_db: bool
+  proxy_mode: bool
+ports:
+  8069/tcp: 8069
+ports_description:
+  8069/tcp: Odoo Web Interface
+panel_icon: "mdi:application-cog"
+panel_title: "Odoo 16"

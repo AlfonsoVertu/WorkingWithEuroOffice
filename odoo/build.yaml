@@ -1,0 +1,3 @@
+﻿build_from:
+  aarch64: "odoo:16.0"
+  amd64: "odoo:16.0"
