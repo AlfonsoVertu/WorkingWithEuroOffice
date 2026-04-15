@@ -6,17 +6,25 @@ Enterprise Resource Planning (ERP) and business applications suite inside Home A
 - Fully functional Odoo 16.0 instance.
 - Dedicated configuration for PostgreSQL connection.
 - Persistent data storage.
-- Multi-architecture support (amd64, aarch64).
-
-## Configuration Options
-- **Master Password**: Required to manage databases (create, backup, restore).
-- **Database Settings**: Configure connection to your external PostgreSQL server (e.g., the Postgres 17 add-on).
-- **Proxy Mode**: Enabled by default to allow access via Home Assistant's internal proxy and external Nginx Proxy Manager.
 
 ## What we added to the standard container:
 - **HA Integration Script**: A `run.sh` entrypoint that automatically maps your Home Assistant add-on options to the `odoo.conf` file.
-- **Rootless Operation**: Runs as the standard `odoo` user for improved security, with system updates handled during the build process.
-- **Automated Deployment**: CI/CD pipeline integrated with GitHub Container Registry (GHCR).
+- **Security Integration**: Master Password and Proxy Mode are pre-exposed in the HA UI.
+- **Multi-Arch Support**: Automated builds for both `amd64` and `aarch64`.
+
+## Configuration & Integration
+1. **First Boot**: Use the **Master Password** to create your primary database.
+2. **PostgreSQL**: Odoo requires a Postgres database. Use your `Postgres 17` add-on credentials.
+3. **Proxy**: If using Nginx Proxy Manager, ensure `proxy_mode` is set to `true` in the configuration.
+
+## Troubleshooting
+- **Database Connection Failed**: Odoo 16 expects a specific Postgres schema. Ensure the user has full permissions: `ALTER SCHEMA public OWNER TO your_user;`.
+- **Slowness**: Odoo is resource-intensive. Ensure your host has at least 4GB of RAM.
+- **Internal Error 500**: Check the add-on logs. Usually related to missing database permissions or mismatched `admin_passwd`.
+
+## Official Documentation
+- [Odoo 16.0 Documentation](https://www.odoo.com/documentation/16.0/)
+- [Odoo Community Forums](https://www.odoo.com/forum)
 
 ## Credits
 This project is maintained and optimized by **Alfonso Vertucci** of **Working With Web**.
