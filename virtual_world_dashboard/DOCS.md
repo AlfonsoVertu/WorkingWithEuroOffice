@@ -1,52 +1,55 @@
-﻿# Branding & Credits
-<div style=\"display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #dee2e6;\">
-    <div style=\"display: flex; align-items: center;\">
-        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png\" width=\"60\" style=\"margin-right: 15px;\" />
-        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png\" width=\"60\" />
-    </div>
-    <div style=\"text-align: right;\">
-        <strong>Alfonso Vertucci | Working With Web</strong><br />
-        <a href=\"https://virtualgate.workingwithweb.eu/\">Virtual Gate Project</a> | 
-        <a href=\"https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/\">WP GPT Automation Pro</a>
-    </div>
+﻿# 🌐 Virtual World Dashboard (WordPress)
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="100" style="margin-right: 20px;" />
+    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="100" />
+    <h3>Suite sviluppata da Alfonso Vertucci | Working With Web</h3>
+    <p>
+        <a href="https://virtualgate.workingwithweb.eu/">Virtual Gate Project</a> | 
+        <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/">Ottieni WP GPT Automation Pro</a>
+    </p>
 </div>
 
+---
 
-![VW Gateway Icon](./icon.png)
+## 📖 Introduzione
+Il **Virtual World Dashboard** è il cuore pulsante dell''integrazione AI del tuo sistema. È un''istanza WordPress pre-configurata che funge da **rest-gateway sicuro** tra le GPT Actions (o altri client AI) e il tuo Home Assistant. 
 
-![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png)
+Grazie al plugin **Virtual World Gate Key** pre-installato, puoi gestire entità, script e automazioni tramite linguaggio naturale con una sicurezza di livello enterprise.
 
-# Virtual World Dashboard (WordPress)
+---
 
-WordPress-based middleware gateway designed to bridge AI (GPTs) and Home Assistant.
+## 🚀 Guida al Primo Avvio
+1. **Database**: Questo add-on richiede un database MariaDB attivo (si consiglia l''add-on ufficiale MariaDB).
+2. **Installazione Automatica**: Al riavvio dell''add-on, il sistema eseguirà il bootstrap automatico di WordPress.
+3. **Accesso**: Una volta avviato, accedi a `http://tuo-ip-ha:8080`.
+4. **Configurazione Token**: 
+   - Vai in **VWGK Settings** nel menu WordPress.
+   - Genera una **Long-Lived Access Token** nel tuo profilo Home Assistant e incollala nel campo dedicato (oppure usa la modalità `supervisor_proxy`).
+   - Copia la **API Key** generata per usarla nelle tue GPT Actions.
 
-## Features
-- Dedicated WordPress instance inside Home Assistant.
-- Acting as a secure REST Gateway.
-- Pre-installed **Virtual World Gate Key** (VWGK) plugin.
+---
 
-## What we added to the standard container:
-- **Automated Bootstrap**: A custom `run.sh` entrypoint that uses `wp-cli` to handle installation, hardening, and plugin activation automatically.
-- **Zero-Touch Config**: Automatically reads database and HA settings from your add-on options.
-- **Security Hardening**: Pre-configured with login-only mode and anti-indexing defaults.
+## ⚙️ Parametri di Configurazione
+| Opzione | Descrizione | Default |
+| :--- | :--- | :--- |
+| `db_host` | Host del database MariaDB. | `core-mariadb` |
+| `db_user` | Nome utente del database. | `wordpress` |
+| `vwgk_api_key` | Chiave segreta per le chiamate REST esterne. | (Auto-generata) |
+| `ha_auth_mode` | Modalità di autenticazione (proxy o token). | `supervisor_proxy` |
 
-## Configuration & Integration
-1. **Database**: Requires a MariaDB instance (the official MariaDB add-on is recommended).
-2. **HA Token**: Generate a Long Lived Access Token in your HA profile and paste it into the `ha_long_lived_token` field, or use `supervisor_proxy`.
-3. **Gateway Key**: The `vwgk_api_key` is the secret you must provide in your GPT Actions headers as `x-api-key`.
+---
 
-## Troubleshooting
-- **Database Connection Error**: Verify `db_host` (usually `core-mariadb`) and credentials. Ensure the MariaDB add-on is running.
-- **WordPress Not Installing**: Check logs for WP-CLI errors. This usually happens if the database is unreachable or the provided domain is invalid.
-- **API 401/403**: Verify the `vwgk_api_key` matches your request headers.
+## 🛠️ Troubleshooting & Supporto
+- **Errore di connessione al DB**: Verifica che l''add-on MariaDB sia attivo e che le credenziali in `config.yaml` siano corrette.
+- **REST API 401/403**: Verifica che l''header `x-api-key` della tua chiamata corrisponda a quella salvata nelle impostazioni del plugin.
+- **Header X-Robots-Tag**: Per sicurezza, il gateway attiva automaticamente il `noindex` per impedire ai motori di ricerca di indicizzare la tua interfaccia privata.
 
-## Official Documentation
-- [WordPress Documentation](https://wordpress.org/documentation/)
-- [WP-CLI Command Reference](https://developer.wordpress.org/cli/commands/)
+---
 
-## Credits
-This project is maintained and optimized by **Alfonso Vertucci** of **Working With Web**.
-Website: [workingwithweb.it/webagency](https://workingwithweb.it/webagency)
+## 💎 Crediti & Attribuzioni
+- **Sviluppo & Ottimizzazione**: **Alfonso Vertucci** - Working With Web.
+- **Landing Pro**: [WP GPT Automation Pro](https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/)
+- **Core**: WordPress.org (Open Source Edition).
 
-
-
+© 2026 Working With Web - Tutti i diritti riservati.

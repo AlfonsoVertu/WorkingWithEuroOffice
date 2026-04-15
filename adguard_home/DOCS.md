@@ -1,189 +1,48 @@
-﻿# Branding & Credits
-<div style=\"display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #dee2e6;\">
-    <div style=\"display: flex; align-items: center;\">
-        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png\" width=\"60\" style=\"margin-right: 15px;\" />
-        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png\" width=\"60\" />
-    </div>
-    <div style=\"text-align: right;\">
-        <strong>Alfonso Vertucci | Working With Web</strong><br />
-        <a href=\"https://virtualgate.workingwithweb.eu/\">Virtual Gate Project</a> | 
-        <a href=\"https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/\">WP GPT Automation Pro</a>
-    </div>
+﻿# 🛡️ AdGuard Home (Branded Edition)
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="100" style="margin-right: 20px;" />
+    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="100" />
+    <h3>Suite sviluppata da Alfonso Vertucci | Working With Web</h3>
+    <p>
+        <a href="https://virtualgate.workingwithweb.eu/">Virtual Gate Project</a> | 
+        <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/">Ottieni WP GPT Automation Pro</a>
+    </p>
 </div>
 
+---
 
-# Home Assistant Community App: AdGuard Home
+## 📖 Introduzione
+**AdGuard Home** è il guardiano della tua privacy a livello di rete. Funge da server DNS che blocca pubblicità, malware e tracciamento per **tutti** i dispositivi connessi alla tua rete locale, senza dover installare alcun software sui singoli device.
 
-[AdGuard Home][adguard] is a network-wide ad-and-tracker blocking DNS server
-with parental control (adult content blocking) capabilities. Its purpose is to
-let you control your entire network and all your devices, and it does not
-require using a client-side program.
+È lo strumento perfetto per mantenere la rete del tuo ecosistema **Virtual World** pulita, veloce e sicura.
 
-AdGuard Home provides a beautiful, easy and feature-rich web interface to
-easily manage the filtering process and its settings.
+---
 
-## Installation
+## 🚀 Guida al Primo Avvio
+1. **Configurazione Iniziale**: Una volta avviato l''add-on, clicca su "Open Web UI".
+2. **Setup Wizard**: Segui la procedura guidata. Quando ti viene chiesto di selezionare l''interfaccia per il DNS, assicurati che la porta sia la `53`. 
+3. **Pannello di Amministrazione**: Ti consigliamo di impostare l''interfaccia web sulla porta `3000` (default per il setup) e successivamente gestirlo tramite la dashboard integrata.
+4. **Configurazione Client**: Per attivare il blocco, imposta l''IP del tuo Home Assistant come **Server DNS primario** nelle impostazioni del tuo router o dei singoli dispositivi.
 
-The installation of this app is pretty straightforward and not different in
-comparison to installing any other Home Assistant app.
+---
 
-1. **Ensure your Home Assistant device has a
-   [static IP and static external DNS servers!](https://developers.home-assistant.io/docs/operating-system/network)**
-   This is important! You **WILL** end up having issues if you skip this step.
-   - Change this setting in Network:
-     [![Open your Home Assistant instance and manage your systems network configuration.](https://my.home-assistant.io/badges/network.svg)](https://my.home-assistant.io/redirect/network/)
-     (_Settings â†’ System â†’ Network
-     â†’ Configure network interfaces â†’ Your Interface â†’ IPv4 â†’ Static_)
-   - Please note, setting a fixed IP in your router is **NOT** static.
-1. Click the Home Assistant My button below to open the app on your Home
-   Assistant instance.
+## ⚙️ Funzionalità Chiave
+- **Blocco a livello DNS**: Risparmio di banda e maggiore privacy.
+- **Controllo Genitori**: Blocca servizi specifici o siti non sicuri.
+- **Statistiche in Tempo Reale**: Visualizza quali domini vengono bloccati maggiormente.
 
-   [![Open this app in your Home Assistant instance.][addon-badge]][addon]
+---
 
-1. Click the "Install" button to install the app.
-1. Start the "AdGuard Home" app.
-1. Check the logs of the "AdGuard Home" to see if everything went well.
-1. Click the "OPEN WEB UI" button and log in with your Home Assistant account.
-1. Ready to go!
+## 🛠️ Troubleshooting & Supporto
+- **DNS non risolve**: Verifica che la porta `53` sia correttamente esposta e non occupata da altri server DNS (come Pi-hole).
+- **Setup Wizard non visibile**: Se non riesci ad accedere alla pagina di setup iniziale, riavvia l''add-on e controlla i log.
 
-## Configuration
+---
 
-**Note**: _Remember to restart the app when the configuration is changed._
+## 💎 Crediti & Attribuzioni
+- **Integrazione & Branding**: **Alfonso Vertucci** - Working With Web.
+- **Autore Originale**: Basato sull''add-on ufficiale della **Home Assistant Community** mantenuto da [Frenck](https://github.com/frenck).
+- **Software Core**: AdGuard Home (AdguardTeam).
 
-Example app configuration:
-
-```yaml
-log_level: info
-ssl: true
-certfile: fullchain.pem
-keyfile: privkey.pem
-```
-
-**Note**: _This is just an example, don't copy and paste it! Create your own!_
-
-### Option: `log_level`
-
-The `log_level` option controls the level of log output by the app and can
-be changed to be more or less verbose, which might be useful when you are
-dealing with an unknown issue. Possible values are:
-
-- `trace`: Show every detail, like all called internal functions.
-- `debug`: Shows detailed debug information.
-- `info`: Normal (usually) interesting events.
-- `warning`: Exceptional occurrences that are not errors.
-- `error`: Runtime errors that do not require immediate action.
-- `fatal`: Something went terribly wrong. App becomes unusable.
-
-Please note that each level automatically includes log messages from a
-more severe level, e.g., `debug` also shows `info` messages. By default,
-the `log_level` is set to `info`, which is the recommended setting unless
-you are troubleshooting.
-
-### Option: `ssl`
-
-Enables/Disables SSL (HTTPS) on the app. Set it `true` to enable it,
-`false` otherwise.
-
-**Note**: _The SSL settings only apply to direct access and has no effect
-on the Ingress service._
-
-### Option: `certfile`
-
-The certificate file to use for SSL.
-
-**Note**: _The file MUST be stored in `/ssl/`, which is the default_
-
-### Option: `keyfile`
-
-The private key file to use for SSL.
-
-**Note**: _The file MUST be stored in `/ssl/`, which is the default_
-
-### Option: `leave_front_door_open`
-
-Adding this option to the app configuration allows you to disable
-authentication on the AdGuard Home by setting it to `true`.
-
-**Note**: _We STRONGLY suggest, not to use this, even if this app is
-only exposed to your internal network. USE AT YOUR OWN RISK!_
-
-## Encryption Settings (Advanced Usage)
-
-Adguard allows the configuration of running DNS-over-HTTPS and DNS-over-
-TLS locally. If you configure these options please ensure to restart the
-app afterwards. Also to use DNS-over-HTTPS correctly please ensure to
-configure SSL on the app as well as in Adguard itself. Also consider
-that the app and Adguard cannot use the same port for SSL.
-
-## Changelog & Releases
-
-This repository keeps a change log using [GitHub's releases][releases]
-functionality.
-
-Releases are based on [Semantic Versioning][semver], and use the format
-of `MAJOR.MINOR.PATCH`. In a nutshell, the version will be incremented
-based on the following:
-
-- `MAJOR`: Incompatible or major changes.
-- `MINOR`: Backwards-compatible new features and enhancements.
-- `PATCH`: Backwards-compatible bugfixes and package updates.
-
-## Support
-
-Got questions?
-
-You have several options to get them answered:
-
-- The [Home Assistant Community Apps Discord chat server][discord] for app
-  support and feature requests.
-- The [Home Assistant Discord chat server][discord-ha] for general Home
-  Assistant discussions and questions.
-- The Home Assistant [Community Forum][forum].
-- Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
-
-You could also [open an issue here][issue] GitHub.
-
-## Authors & contributors
-
-The original setup of this repository is by [Franck Nijhof][frenck].
-
-For a full list of all authors and contributors,
-check [the contributor's page][contributors].
-
-## License
-
-MIT License
-
-Copyright (c) 2019-2026 Franck Nijhof
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-[addon-badge]: https://my.home-assistant.io/badges/supervisor_addon.svg
-[addon]: https://my.home-assistant.io/redirect/supervisor_addon/?addon=a0d7b954_adguard&repository_url=https%3A%2F%2Fgithub.com%2Fhassio-addons%2Frepository
-[adguard]: https://adguard.com/adguard-home/overview.html
-[contributors]: https://github.com/hassio-addons/app-adguard-home/graphs/contributors
-[discord-ha]: https://discord.gg/c5DvZ4e
-[discord]: https://discord.me/hassioaddons
-[forum]: https://community.home-assistant.io/t/home-assistant-community-add-on-adguard-home/90684?u=frenck
-[frenck]: https://github.com/frenck
-[issue]: https://github.com/hassio-addons/app-adguard-home/issues
-[reddit]: https://reddit.com/r/homeassistant
-[releases]: https://github.com/hassio-addons/app-adguard-home/releases
-[semver]: https://semver.org/spec/v2.0.0.html
-
+© 2026 Working With Web - Tutti i diritti riservati.

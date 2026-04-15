@@ -1,53 +1,47 @@
-﻿# Branding & Credits
-<div style=\"display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #dee2e6;\">
-    <div style=\"display: flex; align-items: center;\">
-        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png\" width=\"60\" style=\"margin-right: 15px;\" />
-        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png\" width=\"60\" />
-    </div>
-    <div style=\"text-align: right;\">
-        <strong>Alfonso Vertucci | Working With Web</strong><br />
-        <a href=\"https://virtualgate.workingwithweb.eu/\">Virtual Gate Project</a> | 
-        <a href=\"https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/\">WP GPT Automation Pro</a>
-    </div>
+﻿# 📄 EuroOffice Document Server
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="100" style="margin-right: 20px;" />
+    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="100" />
+    <h3>Suite sviluppata da Alfonso Vertucci | Working With Web</h3>
+    <p>
+        <a href="https://virtualgate.workingwithweb.eu/">Virtual Gate Project</a> | 
+        <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/">Ottieni WP GPT Automation Pro</a>
+    </p>
 </div>
 
+---
 
-![EuroOffice Icon](./icon.png)
+## 📖 Introduzione
+**EuroOffice** è un server di documenti collaborativo basato su **ONLYOFFICE**. Ti permette di visualizzare, creare e modificare documenti di testo, fogli di calcolo e presentazioni in tempo reale direttamente dentro Home Assistant o Nextcloud.
 
-![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png)
+Questa versione è ottimizzata con il **VWG-Shield**, garantendo sicurezza e privacy totali per i tuoi documenti.
 
-# EuroOffice Document Server
+---
 
-Collaborative ONLYOFFICE-based document server for Home Assistant.
+## 🚀 Guida al Primo Avvio
+1. **Configurazione JWT**: Per sicurezza, l''add-on richiede un `jwt_secret`. Usalo per collegare EuroOffice a Nextcloud o altre app.
+2. **Accesso**: L''editor è disponibile internamente. Se abiliti l''esempio (`example: true`), puoi testarlo su `http://tuo-ip-ha:3000`.
+3. **Integrazione Nextcloud**: Nelle impostazioni di Nextcloud, inserisci l''URL di questo add-on: `http://<IP-HA>:8080`.
 
-## Features
-- Fully compatible with ONLYOFFICE Document Server formats.
-- Pre-installed collaborative editing server.
-- Automatic JWT security token synchronization with Home Assistant.
+---
 
-## What we added to the standard container:
-- **Smart Entrypoint**: A custom `run.sh` script that reads your Home Assistant add-on options and automatically configures JWT for both the Document Server and the Example App.
-- **Port Mapping**: Simplified port exposure for Document Server (8080) and Example App (3000).
-- **Automated Build**: CI/CD pipeline on GitHub for fast, optimized deployment on amd64 architectures.
+## ⚙️ Configurazione
+| Opzione | Descrizione | Default |
+| :--- | :--- | :--- |
+| `jwt_secret` | Chiave segreta per l''autenticazione delle richieste. | (Configurabile) |
+| `example` | Abilita l''app di esempio (Node.js) per i test. | `false` |
 
-## Configuration & Integration
-To use EuroOffice with Nextcloud:
-1. Ensure `jwt_enabled` is set to `true`.
-2. Use the same `jwt_secret` in both EuroOffice and Nextcloud add-ons.
-3. In Nextcloud settings, use the URL `http://<your-ha-ip>:8080` or the internal container hostname.
+---
 
-## Troubleshooting
-- **Security Token Error**: Ensure the `jwt_secret` matches perfectly between the Document Server and the client (Nextcloud).
-- **Port Busy**: If the add-on fails to start with "address already in use", check if another add-on or a manual docker container is using port 8080.
-- **Logs**: Check the logs for `[EuroOffice] Document Server JWT configured` to confirm the setup script ran successfully.
+## 🛠️ Troubleshooting & Supporto
+- **Errore Security Token**: Assicurati che lo `jwt_secret` inserito qui corrisponda esattamente a quello configurato nell''app client (es. Nextcloud).
+- **Documento non si carica**: Verifica che il firewall del router non stia bloccando la porta 8080 o 3000 se provi ad accedere dall''esterno.
 
-## Official Documentation
-- [ONLYOFFICE API Documentation](https://api.onlyoffice.com/editors/basic)
-- [ONLYOFFICE Document Server GitHub](https://github.com/ONLYOFFICE/DocumentServer)
+---
 
-## Credits
-This project is maintained and optimized by **Alfonso Vertucci** of **Working With Web**.
-Website: [workingwithweb.it/webagency](https://workingwithweb.it/webagency)
+## 💎 Crediti & Attribuzioni
+- **Integrazione & Branding**: **Alfonso Vertucci** - Working With Web.
+- **Software Core**: ONLYOFFICE Document Server (Open Source Edition).
 
-
-
+© 2026 Working With Web - Tutti i diritti riservati.
