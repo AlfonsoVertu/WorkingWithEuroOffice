@@ -7,51 +7,51 @@ Una suite di add-on per Home Assistant orientati all''automazione intelligente, 
 ## Add-on inclusi
 
 ### 🌐 Virtual World Dashboard
-WordPress come middleware REST tra le tue GPT Actions e Home Assistant. Include il plugin **Virtual World Gate Key** pre-installato: salva il Long-Lived Access Token, espone le rotte sicure verso HA, genera shortcode e card per il tuo sito.
+WordPress come middleware REST. Include il plugin Virtual World Gate Key.
 
 ### 📦 WWW WordPress Suite
-Un''installazione WordPress pulita che pre-carica al primo avvio un set esclusivo di plugin professionali di Working With Web (Multi-vendor, Noleggio Video, Minify CSS/JS/HTML, Image Converter, TOC, Malware Scanner, Blog2Social, Shortcoder). Pronti per essere attivati dalla bacheca.
+WordPress pulito con set esclusivo di 8 plugin proprietari per uso avanzato/e-commerce. 
+
+### 🗃️ MariaDB Server
+Riconfezionamento del server database core ufficiale per funzionare in sinergia col container WWW WordPress Suite e con i propri backend SQL.
 
 ### 📄 EuroOffice (ONLYOFFICE Document Server)
-Server di documenti collaborativo compatibile con formati Microsoft Office. Si integra nativamente con Nextcloud.
+Server di documenti collaborativo.
 
 ### ☁️ Nextcloud + ONLYOFFICE
-Piattaforma di storage e collaborazione cloud self-hosted. Questa versione include OCR e il connettore auto-configurato per EuroOffice.
+Cloud collaborativo con integrazione OCR e Document Server. 
 
 ### 💼 Odoo 16
-Suite ERP completa: CRM, contabilità, vendite, inventario e molto altro. Si connette al database PostgreSQL esterno. 
+Suite ERP completa per contabilità e magazzino.
 
 ### 🗄️ PostgreSQL 17 (con VectorChord)
-Database relazionale altamente performante, ottimizzato anche per funzionalità di embedding vettoriali. È essenziale come backend database per l''istanza di Odoo 16 inclusa.
+Database avanzato per Odoo 16 e applicativi AI.
 
 ### 🔐 Nginx Proxy Manager
-Gestione proxy inversi con supporto SSL automatico (Let''s Encrypt). 
+Gestore reverse proxy e SSL. 
 
 ### 🛡️ AdGuard Home
-DNS server con blocco di pubblicità, tracker e malware a livello di rete. 
+DNS server proxy con filtering pubblicità e tracker.
 
 ### 🕵️ Arpspoof
-Strumento di sicurezza per LAN, permette l''ARP spoofing per simulazione del traffico ed eventuale disconnessione mirata dei dispositivi nel perimetro domestico protetto.
+Strumento di sicurezza per LAN e disconnessioni mirate.
+
+### 🖥️ Webtop KDE
+Ambiente desktop Linux completo accessibile in streaming interamente via Browser e tramite Home Assistant Ingress!
 
 ### 🔍 Elasticsearch
-Motore di ricerca e analisi dati distribuito. 
+Motore di ricerca distribuito. 
 
 ---
 
 ## Installazione
-
-1. In Home Assistant, vai su **Impostazioni → Add-on → Store**.
-2. Clicca sui tre puntini in alto a destra → **Repository**.
-3. Incolla: `https://github.com/AlfonsoVertu/virtual_world_gateway_ha`
-4. Aggiorna e cerca gli add-on da installare.
+1. in Home Assistant --> Impostazioni --> Add-on --> Store
+2. Clicca 3 puntini e Aggiungi Repository: `https://github.com/AlfonsoVertu/virtual_world_gateway_ha`
+3. Cerca, installa e usa.
 
 ---
 
 ## Autori e attribuzioni
-
 Questo repository è sviluppato e mantenuto da **Alfonso Vertucci** — [Working With Web](https://workingwithweb.it/webagency/).
 
-I singoli add-on si basano su software open source mantenuti dai rispettivi autori originali (Nextcloud, Odoo S.A., Elastic, AdGuard Team, Frenck/hassio-addons, alexbelgium). Ogni componente rispetta la propria licenza upstream.
-
-- 🔗 [Virtual Gate Project](https://virtualgate.workingwithweb.eu/)
-- 🔗 [WP GPT Automation Pro](https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/)
+I singoli add-on si basano su software open source (Nextcloud, Odoo S.A., Elastic, AdGuard Team, Frenck/hassio-addons, alexbelgium, linuxserver.io).
