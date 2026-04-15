@@ -1,59 +1,68 @@
-#!/usr/bin/with-contenv bashio
+﻿#!/bin/bash
+# ===========================================================
+# EuroOffice Document Server - Home Assistant Add-on
+# This script configures JWT from HA options then starts
+# the original EuroOffice entrypoint
+# ===========================================================
 set -e
 
 CONFIG_PATH=/data/options.json
 
-JWT_ENABLED=$(jq --raw-output '.jwt_enabled' $CONFIG_PATH)
-JWT_SECRET=$(jq --raw-output '.jwt_secret' $CONFIG_PATH)
-EXAMPLE_ENABLED=$(jq --raw-output '.example_enabled' $CONFIG_PATH)
+# Read options from Home Assistant
+JWT_ENABLED=$(cat $CONFIG_PATH | grep '"jwt_enabled"' | grep -o 'true\|false' | head -1)
+JWT_SECRET=$(cat $CONFIG_PATH | grep '"jwt_secret"' | sed 's/.*"jwt_secret": *"\([^"]*\)".*/\1/')
+EXAMPLE_ENABLED=$(cat $CONFIG_PATH | grep '"example_enabled"' | grep -o 'true\|false' | head -1)
 
-echo "Configuring EuroOffice Document Server..."
+echo "[EuroOffice] Configuring JWT (enabled=$JWT_ENABLED)..."
 
-# Update Document Server config (local.json)
-PYTHON_SCRIPT="
+python3 - <<PYEOF
 import json
-import os
 
 local_json = '/etc/onlyoffice/documentserver/local.json'
-with open(local_json, 'r') as f:
-    data = json.load(f)
+try:
+    with open(local_json, 'r') as f:
+        data = json.load(f)
+except:
+    data = {}
 
-# Configure JWT
-data['services']['CoAuthoring']['token']['enable']['request']['inbox'] = $JWT_ENABLED.lower() == 'true'
-data['services']['CoAuthoring']['token']['enable']['request']['outbox'] = $JWT_ENABLED.lower() == 'true'
-data['services']['CoAuthoring']['token']['enable']['browser'] = $JWT_ENABLED.lower() == 'true'
+jwt_enabled = '${JWT_ENABLED}' == 'true'
+jwt_secret = '${JWT_SECRET}'
 
-secret = '$JWT_SECRET'
-data['services']['CoAuthoring']['secret']['inbox']['string'] = secret
-data['services']['CoAuthoring']['secret']['outbox']['string'] = secret
-data['services']['CoAuthoring']['secret']['browser']['string'] = secret
-data['services']['CoAuthoring']['secret']['session']['string'] = secret
+data.setdefault('services', {}).setdefault('CoAuthoring', {})
+data['services']['CoAuthoring'].setdefault('token', {}).setdefault('enable', {})
+data['services']['CoAuthoring']['token']['enable']['request'] = {'inbox': jwt_enabled, 'outbox': jwt_enabled}
+data['services']['CoAuthoring']['token']['enable']['browser'] = jwt_enabled
+
+data['services']['CoAuthoring'].setdefault('secret', {})
+for k in ['inbox', 'outbox', 'browser', 'session']:
+    data['services']['CoAuthoring']['secret'].setdefault(k, {})['string'] = jwt_secret
 
 with open(local_json, 'w') as f:
     json.dump(data, f, indent=2)
-"
+print('[EuroOffice] Document Server JWT configured.')
+PYEOF
 
-python3 -c "$PYTHON_SCRIPT"
-
-# Update Example App config (default.json)
-if [ "$EXAMPLE_ENABLED" == "true" ]; then
-    echo "Enabling Example Application..."
-    EXAMPLE_SCRIPT="
+if [ "${EXAMPLE_ENABLED}" == "true" ]; then
+    echo "[EuroOffice] Configuring Example App JWT..."
+    python3 - <<PYEOF2
 import json
-example_json = '/etc/onlyoffice/documentserver-example/default.json'
-with open(example_json, 'r') as f:
-    data = json.load(f)
 
-data['server']['token']['enable'] = $JWT_ENABLED.lower() == 'true'
-data['server']['token']['secret'] = '$JWT_SECRET'
+example_json = '/etc/onlyoffice/documentserver-example/default.json'
+try:
+    with open(example_json, 'r') as f:
+        data = json.load(f)
+except:
+    data = {'server': {'token': {}}}
+
+data.setdefault('server', {}).setdefault('token', {})
+data['server']['token']['enable'] = '${JWT_ENABLED}' == 'true'
+data['server']['token']['secret'] = '${JWT_SECRET}'
 
 with open(example_json, 'w') as f:
     json.dump(data, f, indent=2)
-"
-    python3 -c "$EXAMPLE_SCRIPT"
+print('[EuroOffice] Example App JWT configured.')
+PYEOF2
 fi
 
-echo "Starting services..."
-# The EuroOffice image uses supervisor to manage services.
-# We start supervisord in the background or foreground as needed.
-/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+echo "[EuroOffice] Starting EuroOffice Document Server..."
+exec /entrypoint.sh
