@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 if (!defined('ABSPATH')) {
     exit;
@@ -105,13 +105,42 @@ class VWGK_Settings
         $status = VWGK_HA_Client::connection_summary();
         ?>
         <div class="wrap">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
+                <div style="display: flex; align-items: center;">
+                    <div style="margin-right: 20px;">
+                        <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/virtual_world_dashboard/icon.png" style="width: 80px; height: 80px; border-radius: 12px;" />
+                    </div>
+                    <div>
+                        <h1 style="margin: 0; padding: 0; line-height: 1;">Virtual World Gate</h1>
+                        <p style="margin: 10px 0 0; font-size: 1.1em; color: #555;">
+                            Sviluppato con passione da <strong>Alfonso Vertucci</strong> di <strong>Working With Web</strong>.
+                        </p>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <a href="https://virtualgate.workingwithweb.eu/" target="_blank" class="button button-secondary" style="margin-bottom: 10px; display: inline-block;">Visita Virtual Gate Project</a><br />
+                    <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/" target="_blank" class="button button-primary" style="background: #0073aa; border-color: #0073aa;">Ottieni WP GPT Automation Pro Full</a>
+                </div>
+            </div>
             <h1>Virtual World Gate Key</h1>
+            
+            <div class="notice notice-info" style="margin: 1rem 0; padding: 1rem; border-left-color: #0073aa;">
+                <p style="margin: 0; font-size: 1.1em;">
+                    Sviluppato da <strong>Alfonso Vertucci</strong> di <strong>Working With Web</strong>.
+                </p>
+                <p style="margin: 0.5rem 0 0;">
+                    <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/" target="_blank" class="button button-primary">
+                        Ottieni WP GPT Automation Pro Full Edition
+                    </a>
+                </p>
+            </div>
+
             <p>Questo plugin trasforma WordPress in un gateway verso Home Assistant e in un ponte verso le API di WP GPT Automation Pro.</p>
 
             <table class="widefat striped" style="max-width: 900px; margin: 1rem 0;">
                 <tbody>
                     <tr>
-                        <th style="width: 240px;">Modalità Home Assistant</th>
+                        <th style="width: 240px;">ModalitÃ  Home Assistant</th>
                         <td><?php echo esc_html($status['mode']); ?></td>
                     </tr>
                     <tr>
@@ -120,11 +149,11 @@ class VWGK_Settings
                     </tr>
                     <tr>
                         <th>Autenticazione disponibile</th>
-                        <td><?php echo !empty($status['token_present']) ? 'Sì' : 'No'; ?></td>
+                        <td><?php echo !empty($status['token_present']) ? 'SÃ¬' : 'No'; ?></td>
                     </tr>
                     <tr>
                         <th>Credenziali WP GPT sincronizzate</th>
-                        <td><?php echo (get_option('wp_gpt_api_token') && get_option('wp_gpt_user_code')) ? 'Sì' : 'No'; ?></td>
+                        <td><?php echo (get_option('wp_gpt_api_token') && get_option('wp_gpt_user_code')) ? 'SÃ¬' : 'No'; ?></td>
                     </tr>
                 </tbody>
             </table>
@@ -134,7 +163,7 @@ class VWGK_Settings
 
                 <table class="form-table" role="presentation">
                     <tr>
-                        <th scope="row"><label for="vwgk_ha_auth_mode">Modalità connessione HA</label></th>
+                        <th scope="row"><label for="vwgk_ha_auth_mode">ModalitÃ  connessione HA</label></th>
                         <td>
                             <select id="vwgk_ha_auth_mode" name="vwgk_ha_auth_mode">
                                 <?php $mode = get_option('vwgk_ha_auth_mode', 'supervisor_proxy'); ?>
@@ -148,7 +177,7 @@ class VWGK_Settings
                         <th scope="row"><label for="vwgk_ha_url">Endpoint Home Assistant</label></th>
                         <td>
                             <input class="regular-text code" id="vwgk_ha_url" name="vwgk_ha_url" value="<?php echo esc_attr(get_option('vwgk_ha_url', 'http://homeassistant:8123')); ?>" />
-                            <p class="description">Usato solo in modalità <code>long_lived_token</code>.</p>
+                            <p class="description">Usato solo in modalitÃ  <code>long_lived_token</code>.</p>
                         </td>
                     </tr>
                     <tr>
@@ -171,7 +200,7 @@ class VWGK_Settings
                             <?php 
                             wp_dropdown_pages([
                                 'name'             => 'vwgk_ha_dashboard_page_id',
-                                'show_option_none' => __('— Nessuna —', 'virtual-world-gate-key'),
+                                'show_option_none' => __('â€” Nessuna â€”', 'virtual-world-gate-key'),
                                 'option_none_value'=> '0',
                                 'selected'         => get_option('vwgk_ha_dashboard_page_id', 0),
                             ]);
@@ -223,3 +252,4 @@ class VWGK_Settings
         <?php
     }
 }
+

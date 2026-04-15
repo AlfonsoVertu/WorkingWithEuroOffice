@@ -1,4 +1,18 @@
-﻿![Nextcloud Icon](./icon.png)
+﻿# Branding & Credits
+<div style=\"display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #dee2e6;\">
+    <div style=\"display: flex; align-items: center;\">
+        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png\" width=\"60\" style=\"margin-right: 15px;\" />
+        <img src=\"https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png\" width=\"60\" />
+    </div>
+    <div style=\"text-align: right;\">
+        <strong>Alfonso Vertucci | Working With Web</strong><br />
+        <a href=\"https://virtualgate.workingwithweb.eu/\">Virtual Gate Project</a> | 
+        <a href=\"https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/\">WP GPT Automation Pro</a>
+    </div>
+</div>
+
+
+![Nextcloud Icon](./icon.png)
 
 ![Working With Web](https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png)
 
@@ -33,5 +47,6 @@ A powerful Nextcloud instance with OCR capabilities and automatic ONLYOFFICE int
 ## Credits
 This project is maintained and optimized by **Alfonso Vertucci** of **Working With Web**.
 Website: [workingwithweb.it/webagency](https://workingwithweb.it/webagency)
+
 
 
