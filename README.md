@@ -1,52 +1,48 @@
-﻿# 🌐 Virtual World Gateway HA: Premium Add-on Suite
+﻿# Virtual World Gateway HA
 
-<div align="center">
-    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="120" style="margin-right: 30px;" />
-    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="120" />
-    <p>
-        <strong>Sviluppato da Alfonso Vertucci | Working With Web</strong><br />
-        <em>L''integrazione perfetta tra Intelligenza Artificiale, Automazione d''Ufficio e Network Management.</em>
-    </p>
-    <p>
-        <a href="https://virtualgate.workingwithweb.eu/"><img src="https://img.shields.io/badge/Project-Virtual_Gate-blue?style=for-the-badge&logo=virtualbox" /></a>
-        <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/"><img src="https://img.shields.io/badge/Get-WP_GPT_Automation_Pro-orange?style=for-the-badge&logo=wordpress" /></a>
-    </p>
-</div>
+Una suite di add-on per Home Assistant orientati all''automazione intelligente, alla produttività aziendale e alla protezione della rete. Pensati per integrarsi tra loro e con sistemi di AI come GPT.
 
 ---
 
-## 🚀 Benvenuti nel Futuro dell''Automazione
-Questo repository offre una suite di add-on premium per Home Assistant, progettati per trasformare la tua casa intelligente in un centro operativo avanzato. Ogni componente è stato ottimizzato per interagire perfettamente con l''ecosistema **Virtual World Gateway**.
+## Add-on inclusi
 
-### 🛠️ Gli Strumenti Inclusi
+### 🌐 Virtual World Dashboard
+WordPress come middleware REST tra le tue GPT Actions e Home Assistant. Include il plugin **Virtual World Gate Key** pre-installato: salva il Long-Lived Access Token, espone le rotte sicure verso HA, genera shortcode e card per il tuo sito.
 
-| Add-on | Descrizione | Autore Originale |
-| :--- | :--- | :--- |
-| **Virtual World Dashboard** | Middleware WordPress per GPT & AI Automation. | Alfonso Vertucci |
-| **EuroOffice** | Document Server collaborativo basato su ONLYOFFICE. | ONLYOFFICE |
-| **Nextcloud** | Storage cloud con OCR e integrazione Office. | Nextcloud |
-| **Odoo 16** | ERP enterprise e App aziendali. | Odoo S.A. |
-| **Nginx Proxy Manager** | Gestione semplificata di SSL e Proxy inversi. | [Frenck](https://github.com/frenck) |
-| **AdGuard Home** | Blocco pubblicità e tracciamento a livello di rete. | [AdGuard](https://github.com/AdguardTeam) |
-| **Elasticsearch** | Motore di ricerca e analisi dati ultra-veloce. | [Elastic](https://github.com/elastic) |
+### 📄 EuroOffice (ONLYOFFICE Document Server)
+Server di documenti collaborativo compatibile con formati Microsoft Office. Si integra nativamente con Nextcloud per la modifica in tempo reale.
 
----
+### ☁️ Nextcloud + ONLYOFFICE
+Piattaforma di storage e collaborazione cloud self-hosted. Questa versione include OCR e il connettore auto-configurato per EuroOffice.
 
-## 💎 Double Branding & Crediti
-Questo repository è mantenuto da **Alfonso Vertucci** di **Working With Web**. Il nostro obiettivo è fornire strumenti di livello aziendale accessibili tramite l''interfaccia di Home Assistant.
+### 💼 Odoo 16
+Suite ERP completa: CRM, contabilità, vendite, inventario e molto altro. Si connette al database PostgreSQL esterno. Ideale per chi gestisce una piccola impresa dalla propria infrastruttura.
 
-### 🔗 Link Ufficiali
-- 🏪 **Negozio PRO**: [Acquista WP GPT Automation Pro](https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/)
-- 🌐 **Project Home**: [Virtual Gate Official](https://virtualgate.workingwithweb.eu/)
-- 📧 **Agenzia**: [Working With Web](https://workingwithweb.it/webagency/)
+### 🔐 Nginx Proxy Manager
+Gestione proxy inversi con supporto SSL automatico (Let''s Encrypt). Permette di esporre in modo sicuro i servizi della rete su un dominio pubblico senza configurare manualmente Nginx.
+
+### 🛡️ AdGuard Home
+DNS server con blocco di pubblicità, tracker e malware a livello di rete. Protegge tutti i dispositivi connessi senza installare nulla sui singoli device.
+
+### 🔍 Elasticsearch
+Motore di ricerca e analisi dati distribuito. Utile per indicizzare log, eventi e dati provenienti da Home Assistant o altri servizi della suite.
 
 ---
 
-## 📦 Installazione
-1. Copia l''URL di questo repository: `https://github.com/AlfonsoVertu/virtual_world_gateway_ha`
-2. In Home Assistant, vai su **Impostazioni** > **Add-on** > **Add-on Store**.
-3. Clicca sui tre puntini in alto a destra > **Repository**.
-4. Incolla l''URL e premi **Aggiungi**.
-5. Cerca gli add-on della suite "Working With Web" e installa quelli desiderati.
+## Installazione
 
-© 2026 Alfonso Vertucci - Working With Web. Tutti i diritti riservati.
+1. In Home Assistant, vai su **Impostazioni → Add-on → Store**.
+2. Clicca sui tre puntini in alto a destra → **Repository**.
+3. Incolla: `https://github.com/AlfonsoVertu/virtual_world_gateway_ha`
+4. Aggiorna e cerca gli add-on da installare.
+
+---
+
+## Autori e attribuzioni
+
+Questo repository è sviluppato e mantenuto da **Alfonso Vertucci** — [Working With Web](https://workingwithweb.it/webagency/).
+
+I singoli add-on si basano su software open source mantenuti dai rispettivi autori originali (Nextcloud, Odoo S.A., Elastic, AdGuard Team, Frenck/hassio-addons). Ogni componente rispetta la propria licenza upstream.
+
+- 🔗 [Virtual Gate Project](https://virtualgate.workingwithweb.eu/)
+- 🔗 [WP GPT Automation Pro](https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/)

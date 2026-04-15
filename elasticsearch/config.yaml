@@ -1,6 +1,6 @@
 ﻿name: "Elasticsearch (WWW)"
 slug: "elasticsearch"
-description: "Elasticsearch for Home Assistant - Double Branded"
+description: "Elasticsearch for Home Assistant"
 version: "8.12.2"
 arch:
   - aarch64
@@ -18,3 +18,4 @@ image: "ghcr.io/alfonsovertu/elasticsearch-{arch}"
 ports:
   9200/tcp: 9200
   9300/tcp: 9300
+

@@ -45,4 +45,4 @@ ports:
 ports_description:
   80/tcp: WordPress Gateway Interface
 panel_icon: "mdi:wordpress"
-panel_title: "VW Gateway"
+panel_title: "VW Dashboard"

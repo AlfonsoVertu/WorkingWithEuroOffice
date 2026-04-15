@@ -1,51 +1,79 @@
-﻿# 🔐 Nginx Proxy Manager (Branded Edition)
+# Nginx Proxy Manager
 
 <div align="center">
-    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="100" style="margin-right: 20px;" />
-    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="100" />
-    <h3>Suite sviluppata da Alfonso Vertucci | Working With Web</h3>
-    <p>
-        <a href="https://virtualgate.workingwithweb.eu/">Virtual Gate Project</a> | 
-        <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/">Ottieni WP GPT Automation Pro</a>
-    </p>
+  <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="80" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="80" />
 </div>
 
 ---
 
-## 📖 Introduzione
-**Nginx Proxy Manager** è la soluzione definitiva per esporre i tuoi servizi web in modo sicuro tramite Home Assistant. Gestisce automaticamente i certificati **Let''s Encrypt SSL** e ti permette di creare Proxy Inversi con pochi clic tramite una dashboard web intuitiva.
+Pannello web per la gestione di proxy inversi Nginx con supporto automatico ai certificati **SSL Let's Encrypt**. Permette di esporre servizi interni (Odoo, Nextcloud, WordPress) su un dominio pubblico con HTTPS senza configurare Nginx manualmente.
 
-Questa versione è integrata nella suite **Virtual World Gateway** per garantire una gestione semplificata degli accessi ai tuoi gateway AI.
-
----
-
-## 🚀 Guida al Primo Avvio
-1. **Avvio**: Dopo l''installazione, avvia l''add-on e attendi qualche minuto per l''inizializzazione.
-2. **Accesso UI**: Apri l''interfaccia web all''indirizzo `http://tuo-ip-ha:81`.
-3. **Credenziali Predefinite**:
-   - **Email**: `admin@example.com`
-   - **Password**: `changeme`
-   - *IMPORTANTE: Al primo accesso, il sistema ti chiederà di aggiornare email e password.*
+Basato sull'add-on ufficiale mantenuto da [Frenck](https://github.com/frenck) per la community Home Assistant.
 
 ---
 
-## ⚙️ Porte e Rete
-Questo add-on espone le seguenti porte standard:
-- **81**: Pannello di amministrazione (HTTP).
-- **80**: Traffico web standard (HTTP).
-- **443**: Traffico web sicuro (HTTPS/SSL).
+## Porte esposte
+
+| Porta | Utilizzo |
+|:---|:---|
+| `81` | Pannello di amministrazione web |
+| `80` | Traffico HTTP (necessario per Let's Encrypt) |
+| `443` | Traffico HTTPS |
 
 ---
 
-## 🛠️ Suggerimenti & Troubleshooting
-- **Porte Occupate**: Se l''add-on non si avvia, verifica che le porte 80/443 non siano occupate da altri add-on o dal webserver di Home Assistant.
-- **SSL Let''s Encrypt**: Assicurati che il tuo router inoltri correttamente le porte 80 e 443 verso l''IP del tuo Home Assistant per permettere il rinnovo automatico dei certificati.
+## Primo avvio
+
+1. Avvia l'add-on e apri il pannello su `http://<ip-ha>:81`.
+2. **Credenziali predefinite:**
+   - Email: `admin@example.com`
+   - Password: `changeme`
+3. Al primo login, il sistema chiede di cambiare email e password. Fallo subito.
+4. Crea il primo **Proxy Host** dalla sezione omonima nel pannello.
 
 ---
 
-## 💎 Crediti & Attribuzioni
-- **Integrazione & Branding**: **Alfonso Vertucci** - Working With Web.
-- **Autore Originale**: Basato sull''add-on ufficiale della **Home Assistant Community** mantenuto da [Frenck](https://github.com/frenck).
-- **Software Core**: JC21 Nginx Proxy Manager.
+## Creare un Proxy Host
 
-© 2026 Working With Web - Tutti i diritti riservati.
+1. Clicca su **Add Proxy Host**.
+2. **Domain Names**: inserisci il tuo dominio (es. `odoo.tuodominio.com`).
+3. **Scheme**: `http` · **Forward Hostname/IP**: IP del tuo servizio · **Forward Port**: porta del servizio.
+4. Nella scheda **SSL**: seleziona "Request a new SSL Certificate" e abilita "Force SSL".
+5. Salva. NPM richiesterà automaticamente il certificato Let's Encrypt.
+
+> **Prerequisito SSL**: il tuo router deve inoltrare la porta `80` verso l'IP di Home Assistant per permettere la validazione Let's Encrypt.
+
+---
+
+## Esempi di proxy nella suite Virtual World Gateway
+
+| Dominio | Forward Port | Note |
+|:---|:---|:---|
+| `odoo.tuodominio.com` | `8069` | Abilitare Websocket Support |
+| `cloud.tuodominio.com` | `8099` | Nextcloud |
+| `gateway.tuodominio.com` | `8081` | Virtual World Dashboard |
+
+---
+
+## Troubleshooting
+
+**Porta 80 o 443 già in uso**
+→ Verifica che nessun altro add-on (es. HA stessa) stia usando queste porte. Disabilita o sposta le porte in conflitto.
+
+**Certificato SSL non viene emesso**
+→ Assicurati che la porta 80 sia raggiungibile dall'esterno e che il DNS del dominio punti all'IP pubblico corretto.
+
+**Pannello non raggiungibile dopo il riavvio**
+→ Controlla che l'add-on sia impostato su avvio automatico (`boot: auto`).
+
+---
+
+## Crediti
+
+Integrazione e branding: [Alfonso Vertucci](https://workingwithweb.it/webagency/) — Working With Web.
+Add-on originale: [hassio-addons/addon-nginx-proxy-manager](https://github.com/hassio-addons/addon-nginx-proxy-manager) di [Frenck](https://github.com/frenck).
+Software core: **JC21 Nginx Proxy Manager** — [nginxproxymanager.com](https://nginxproxymanager.com)
+
+Progetto Virtual Gate: [virtualgate.workingwithweb.eu](https://virtualgate.workingwithweb.eu/)

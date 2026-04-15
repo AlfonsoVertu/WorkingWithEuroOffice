@@ -1,47 +1,68 @@
-﻿# 📄 EuroOffice Document Server
+# EuroOffice — ONLYOFFICE Document Server
 
 <div align="center">
-    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="100" style="margin-right: 20px;" />
-    <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="100" />
-    <h3>Suite sviluppata da Alfonso Vertucci | Working With Web</h3>
-    <p>
-        <a href="https://virtualgate.workingwithweb.eu/">Virtual Gate Project</a> | 
-        <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/">Ottieni WP GPT Automation Pro</a>
-    </p>
+  <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/vwg_logo.png" width="80" />
+  &nbsp;&nbsp;&nbsp;
+  <img src="https://raw.githubusercontent.com/AlfonsoVertu/virtual_world_gateway_ha/master/www_logo.png" width="80" />
 </div>
 
 ---
 
-## 📖 Introduzione
-**EuroOffice** è un server di documenti collaborativo basato su **ONLYOFFICE**. Ti permette di visualizzare, creare e modificare documenti di testo, fogli di calcolo e presentazioni in tempo reale direttamente dentro Home Assistant o Nextcloud.
-
-Questa versione è ottimizzata con il **VWG-Shield**, garantendo sicurezza e privacy totali per i tuoi documenti.
+Server di documenti collaborativo basato su **ONLYOFFICE Document Server**. Permette la visualizzazione e modifica in tempo reale di documenti Word, Excel e PowerPoint direttamente nel browser. Si integra con Nextcloud per la modifica nativa dei file cloud.
 
 ---
 
-## 🚀 Guida al Primo Avvio
-1. **Configurazione JWT**: Per sicurezza, l''add-on richiede un `jwt_secret`. Usalo per collegare EuroOffice a Nextcloud o altre app.
-2. **Accesso**: L''editor è disponibile internamente. Se abiliti l''esempio (`example: true`), puoi testarlo su `http://tuo-ip-ha:3000`.
-3. **Integrazione Nextcloud**: Nelle impostazioni di Nextcloud, inserisci l''URL di questo add-on: `http://<IP-HA>:8080`.
+## Configurazione dell'add-on
+
+| Parametro | Descrizione |
+|:---|:---|
+| `jwt_enabled` | Abilita la firma JWT per proteggere le richieste. Raccomandato: `true`. |
+| `jwt_secret` | Segreto condiviso tra Document Server e i client. Deve essere identico a quello configurato in Nextcloud (`onlyoffice_jwt`). |
+| `example_enabled` | Abilita l'applicazione di esempio accessibile su porta 3000. Utile per test. Disabilita in produzione. |
+
+**Porte esposte:**
+| Porta | Utilizzo |
+|:---|:---|
+| `8080` | Document Server (endpoint principale per Nextcloud/client) |
+| `3000` | App di esempio (solo se `example_enabled: true`) |
 
 ---
 
-## ⚙️ Configurazione
-| Opzione | Descrizione | Default |
-| :--- | :--- | :--- |
-| `jwt_secret` | Chiave segreta per l''autenticazione delle richieste. | (Configurabile) |
-| `example` | Abilita l''app di esempio (Node.js) per i test. | `false` |
+## Primo avvio
+
+1. Imposta un `jwt_secret` sicuro (stringa casuale, almeno 32 caratteri).
+2. Avvia l'add-on.
+3. Configura Nextcloud con lo stesso `jwt_secret` nel campo `onlyoffice_jwt`.
+4. URL da inserire in Nextcloud: `http://<ip-ha>:8080`
 
 ---
 
-## 🛠️ Troubleshooting & Supporto
-- **Errore Security Token**: Assicurati che lo `jwt_secret` inserito qui corrisponda esattamente a quello configurato nell''app client (es. Nextcloud).
-- **Documento non si carica**: Verifica che il firewall del router non stia bloccando la porta 8080 o 3000 se provi ad accedere dall''esterno.
+## Integrazione con Nextcloud
+
+In Nextcloud vai su **Impostazioni → Amministrazione → ONLYOFFICE**:
+- **Indirizzo Document Server**: `http://<ip-ha>:8080`
+- **Chiave JWT**: stesso valore del `jwt_secret` di questo add-on
+- **Indirizzo interno**: lascia vuoto se EuroOffice e Nextcloud sono sulla stessa rete HA
 
 ---
 
-## 💎 Crediti & Attribuzioni
-- **Integrazione & Branding**: **Alfonso Vertucci** - Working With Web.
-- **Software Core**: ONLYOFFICE Document Server (Open Source Edition).
+## Troubleshooting
 
-© 2026 Working With Web - Tutti i diritti riservati.
+**Errore "Security token is not valid"**
+→ Il `jwt_secret` di EuroOffice e il `onlyoffice_jwt` di Nextcloud non corrispondono. Verifica che siano identici (rispetta maiuscole/minuscole e spazi).
+
+**Documento non si apre su Nextcloud**
+→ Controlla che la porta 8080 sia raggiungibile dall'host Nextcloud. Se entrambi gli add-on girano in HA, dovrebbe funzionare automaticamente.
+
+**Add-on non si avvia**
+→ Verifica nei log che la porta 8080 non sia già occupata da un altro servizio.
+
+---
+
+## Crediti
+
+Integrazione sviluppata da [Alfonso Vertucci](https://workingwithweb.it/webagency/) — Working With Web.
+Software core: **ONLYOFFICE** (open source) — [onlyoffice.com](https://www.onlyoffice.com)
+Documentazione ufficiale: [api.onlyoffice.com](https://api.onlyoffice.com/editors/basic)
+
+Progetto Virtual Gate: [virtualgate.workingwithweb.eu](https://virtualgate.workingwithweb.eu/)
