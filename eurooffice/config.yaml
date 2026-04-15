@@ -8,7 +8,7 @@ arch:
   - amd64
 startup: services
 boot: auto
-image: "ghcr.io/alfonsoVertu/eurooffice-{arch}"
+image: "ghcr.io/alfonsovertu/eurooffice-{arch}"
 map:
   - config:rw
   - share:rw
