@@ -31,7 +31,8 @@ RUN apk add --no-cache \
     jq \
     bash \
     dos2unix \
-    && ln -sf /usr/bin/php83 /usr/bin/php
+    && ln -sf /usr/bin/php83 /usr/bin/php \
+    && sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php83/php.ini
 
 # Install WP-CLI
 RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp \
