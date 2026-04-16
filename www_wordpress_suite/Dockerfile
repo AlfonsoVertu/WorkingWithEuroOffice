@@ -30,7 +30,8 @@ RUN apk add --no-cache \
     curl \
     jq \
     bash \
-    dos2unix
+    dos2unix \
+    && ln -sf /usr/bin/php83 /usr/bin/php
 
 # Install WP-CLI
 RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp \
