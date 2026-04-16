@@ -1,4 +1,4 @@
-﻿FROM wordpress:6.6.2-php8.2-apache
+FROM wordpress:6.6.2-php8.2-apache
 
 # Install dependencies for HA environment and WP-CLI
 RUN apt-get update && apt-get install -y \
@@ -16,6 +16,11 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 # Copy Custom Plugin
 COPY plugin/virtual-world-gate-key /var/www/html/wp-content/plugins/virtual-world-gate-key/
+
+# Copy and install WP GPT Automation Free
+COPY plugin/wp-gpt-automation-free.zip /tmp/wp-gpt-automation-free.zip
+RUN unzip /tmp/wp-gpt-automation-free.zip -d /var/www/html/wp-content/plugins/ && \
+    rm /tmp/wp-gpt-automation-free.zip
 
 # Copy entrypoint script
 COPY run.sh /run.sh

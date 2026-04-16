@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 set -e
 
 CONFIG_PATH=/data/options.json
@@ -54,6 +54,7 @@ fi
 # 4. Plugin Activation & Sync
 echo "[VW Gateway] Syncing plugins and settings..."
 wp plugin activate virtual-world-gate-key --allow-root
+wp plugin activate wp-gpt-automation-free --allow-root
 
 # Sync HA settings into WP options for the plugin
 wp option update vwgk_ha_auth_mode "$HA_AUTH_MODE" --allow-root

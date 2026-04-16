@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 if (!defined('ABSPATH')) {
     exit;
@@ -119,6 +119,7 @@ class VWGK_Settings
                 </div>
                 <div style="text-align: right;">
                     <a href="https://virtualgate.workingwithweb.eu/" target="_blank" class="button button-secondary" style="margin-bottom: 10px; display: inline-block;">Visita Virtual Gate Project</a><br />
+                    <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-free/" target="_blank" class="button button-secondary" style="background: #2271b1; color: white; border-color: #2271b1; margin-bottom: 10px;">Ottieni WP GPT Automation Free (Licenza Gratuita)</a><br />
                     <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/" target="_blank" class="button button-primary" style="background: #0073aa; border-color: #0073aa;">Ottieni WP GPT Automation Pro Full</a>
                 </div>
             </div>
@@ -129,7 +130,10 @@ class VWGK_Settings
                     Sviluppato da <strong>Alfonso Vertucci</strong> di <strong>Working With Web</strong>.
                 </p>
                 <p style="margin: 0.5rem 0 0;">
-                    <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/" target="_blank" class="button button-primary">
+                    <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-free/" target="_blank" class="button button-secondary">
+                        Richiedi Licenza WP GPT Automation Free
+                    </a>
+                    <a href="https://workingwithweb.it/webagency/gestisci-wordpress-da-chatgpt-wp-gpt-automation-pro/" target="_blank" class="button button-primary" style="margin-left: 10px;">
                         Ottieni WP GPT Automation Pro Full Edition
                     </a>
                 </p>
