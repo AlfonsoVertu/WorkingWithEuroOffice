@@ -11,6 +11,17 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 # Copy patches
 COPY patches/*.patch /usr/src/
 
+# Debug: inspect base image to fix apk repos
+# hadolint ignore=DL3003,DL3042
+RUN echo "=== Alpine release ===" \
+    && cat /etc/alpine-release \
+    && echo "=== APK repositories ===" \
+    && cat /etc/apk/repositories \
+    && echo "=== Search certbot ===" \
+    && apk search certbot || true \
+    && echo "=== Search yarn ===" \
+    && apk search yarn || true
+
 # Setup base
 ARG NGINX_PROXY_MANAGER_VERSION="v2.12.4"
 # hadolint ignore=DL3003,DL3042
