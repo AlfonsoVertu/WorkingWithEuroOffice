@@ -29,6 +29,19 @@ jobs:
           VERSION=$(grep "^version:" ${{ matrix.addon }}/config.yaml | sed -E "s/version:[[:space:]]*[\"']?(.*)[\"']?/\1/" | tr -d "[:space:]\"'")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
+      - name: Fetch BUILD_FROM arguments
+        run: |
+          if [ -f ${{ matrix.addon }}/build.yaml ]; then
+            BF_AMD64=$(grep "amd64:" ${{ matrix.addon }}/build.yaml | awk '{print $2}' | tr -d '"'"'"')
+            BF_AARCH64=$(grep "aarch64:" ${{ matrix.addon }}/build.yaml | awk '{print $2}' | tr -d '"'"'"')
+          fi
+          
+          if [ -z "$BF_AMD64" ]; then BF_AMD64="ghcr.io/home-assistant/amd64-base:latest"; fi
+          if [ -z "$BF_AARCH64" ]; then BF_AARCH64="ghcr.io/home-assistant/aarch64-base:latest"; fi
+          
+          echo "BUILD_FROM_AMD64=$BF_AMD64" >> $GITHUB_ENV
+          echo "BUILD_FROM_AARCH64=$BF_AARCH64" >> $GITHUB_ENV
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -48,6 +61,8 @@ jobs:
           context: ./${{ matrix.addon }}
           platforms: linux/amd64
           push: true
+          build-args: |
+             BUILD_FROM=${{ env.BUILD_FROM_AMD64 }}
           tags: |
             ghcr.io/${{ env.OWNER }}/${{ matrix.addon }}-amd64:latest
             ghcr.io/${{ env.OWNER }}/${{ matrix.addon }}-amd64:${{ env.VERSION }}
@@ -59,6 +74,8 @@ jobs:
           context: ./${{ matrix.addon }}
           platforms: linux/arm64
           push: true
+          build-args: |
+             BUILD_FROM=${{ env.BUILD_FROM_AARCH64 }}
           tags: |
             ghcr.io/${{ env.OWNER }}/${{ matrix.addon }}-aarch64:latest
             ghcr.io/${{ env.OWNER }}/${{ matrix.addon }}-aarch64:${{ env.VERSION }}
