@@ -68,7 +68,17 @@ jobs:
                 || echo "#!/bin/bash" > "$ADDON_DIR/$SCRIPT"
               chmod +x "$ADDON_DIR/$SCRIPT"
               if [ "$SCRIPT" = "ha_automodules.sh" ]; then
-                sed -i 's/apt-get update/apt-get clean \&\& rm -rf \/var\/lib\/apt\/lists\/\* \&\& apt-get update/g' "$ADDON_DIR/$SCRIPT"
+                echo "Host-side injecting ha_automodules into rootfs..."
+                MODULES=$(grep -h -e '^ARG MODULES=' "$DOCKERFILE" | head -n 1 | cut -d'"' -f2 | cut -d"'" -f2 || echo "")
+                MODULES="$MODULES 00-banner.sh 01-custom_script.sh 01-config_yaml.sh 00-global_var.sh"
+                mkdir -p "$ADDON_DIR/rootfs/etc/cont-init.d"
+                for m in $MODULES; do
+                  if [ ! -f "$ADDON_DIR/rootfs/etc/cont-init.d/$m" ]; then
+                    curl -fsSL "https://raw.githubusercontent.com/alexbelgium/hassio-addons/master/.templates/$m" -o "$ADDON_DIR/rootfs/etc/cont-init.d/$m" || echo "# Failed to download $m" > "$ADDON_DIR/rootfs/etc/cont-init.d/$m"
+                    chmod +x "$ADDON_DIR/rootfs/etc/cont-init.d/$m"
+                  fi
+                done
+                sed -i '/ha_automodules\.sh/d' "$DOCKERFILE"
               fi
             fi
           done
