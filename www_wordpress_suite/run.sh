@@ -54,6 +54,12 @@ if [ "$USE_INTERNAL_DB" == "true" ]; then
     mysql -e "FLUSH PRIVILEGES;"
 fi
 
+# Configure Apache DocumentRoot
+echo "Configuring Apache DocumentRoot..."
+sed -i "s|DocumentRoot \"/var/www/localhost/htdocs\"|DocumentRoot \"${WP_PATH}\"|g" /etc/apache2/httpd.conf
+sed -i "s|<Directory \"/var/www/localhost/htdocs\">|<Directory \"${WP_PATH}\">|g" /etc/apache2/httpd.conf
+sed -i "s|AllowOverride None|AllowOverride All|g" /etc/apache2/httpd.conf
+
 # Start Apache
 echo "Starting Apache server..."
 httpd -D FOREGROUND &
