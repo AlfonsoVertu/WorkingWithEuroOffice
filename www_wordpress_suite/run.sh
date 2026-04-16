@@ -38,7 +38,7 @@ if [ "$USE_INTERNAL_DB" == "true" ]; then
     chown mysql:mysql /run/mysqld
 
     echo "Starting internal MariaDB server..."
-    mariadbd --user=mysql --datadir="$MYSQL_DATA_DIR" --bind-address=127.0.0.1 &
+    mariadbd --user=mysql --datadir="$MYSQL_DATA_DIR" --bind-address=127.0.0.1 --port=3306 --skip-networking=0 &
     MARIADB_PID=$!
 
     echo "Waiting for internal MariaDB to be ready..."
