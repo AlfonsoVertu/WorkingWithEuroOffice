@@ -32,7 +32,8 @@ RUN apk add --no-cache \
     bash \
     dos2unix \
     && ln -sf /usr/bin/php83 /usr/bin/php \
-    && sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php83/php.ini
+    && sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php83/php.ini \
+    && printf "[mariadb]\nbind-address = 127.0.0.1\nport = 3306\nskip-networking = 0\n" > /etc/my.cnf.d/99-networking.cnf
 
 # Install WP-CLI
 RUN wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp \
