@@ -15,7 +15,8 @@ COPY patches/*.patch /usr/src/
 ARG NGINX_PROXY_MANAGER_VERSION="v2.12.4"
 # hadolint ignore=DL3003,DL3042
 RUN \
-    apk add --no-cache --virtual .build-dependencies \
+    apk add --no-cache --update-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/community \
+        --virtual .build-dependencies \
         build-base \
         git \
         libffi-dev \
@@ -23,7 +24,7 @@ RUN \
         patch \
         python3-dev \
     \
-    && apk add --no-cache \
+    && apk add --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/community \
         apache2-utils \
         certbot \
         libcap \
@@ -35,7 +36,8 @@ RUN \
         openssl \
         py3-pip \
         python3 \
-        yarn \
+    \
+    && npm install -g yarn \
     \
     && curl -J -L -o /tmp/nginxproxymanager.tar.gz \
         "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/${NGINX_PROXY_MANAGER_VERSION}.tar.gz" \
