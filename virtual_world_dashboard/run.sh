@@ -27,6 +27,24 @@ VWGK_API_KEY=$(get_option "vwgk_api_key")
 
 echo "[VW Gateway] STARTING..."
 
+# 0. Bootstrap WordPress core files into /var/www/html (original WP entrypoint)
+if [ ! -f /var/www/html/wp-includes/version.php ]; then
+    echo "[VW Gateway] Bootstrapping WordPress core files..."
+    # Run the original WP entrypoint in the background to copy files, then kill it
+    # (We only need the file-copy logic, not the apache start)
+    bash /usr/local/bin/docker-entrypoint.sh apache2-foreground &
+    WP_BOOT_PID=$!
+    # Wait until wp-includes/version.php appears (proof WP files are in place)
+    RETRIES=30
+    while [ ! -f /var/www/html/wp-includes/version.php ] && [ $RETRIES -gt 0 ]; do
+        sleep 1
+        RETRIES=$((RETRIES - 1))
+    done
+    kill $WP_BOOT_PID 2>/dev/null || true
+    wait $WP_BOOT_PID 2>/dev/null || true
+    echo "[VW Gateway] WordPress core files ready."
+fi
+
 # 1. Wait for database
 echo "[VW Gateway] Waiting for database at $DB_HOST..."
 until mysqladmin ping -h "$DB_HOST" --silent; do
