@@ -33,6 +33,10 @@ if [ "$USE_INTERNAL_DB" == "true" ]; then
         mysql_install_db --user=mysql --datadir="$MYSQL_DATA_DIR" > /dev/null
     fi
 
+    echo "Preparing MariaDB socket directory..."
+    mkdir -p /run/mysqld
+    chown mysql:mysql /run/mysqld
+
     echo "Starting internal MariaDB server..."
     mariadbd --user=mysql --datadir="$MYSQL_DATA_DIR" --bind-address=127.0.0.1 &
     MARIADB_PID=$!
