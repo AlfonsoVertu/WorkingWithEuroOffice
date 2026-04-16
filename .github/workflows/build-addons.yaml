@@ -31,14 +31,20 @@ jobs:
 
       - name: Fetch BUILD_FROM arguments
         run: |
+          # Try build.yaml first
           if [ -f ${{ matrix.addon }}/build.yaml ]; then
-            BF_AMD64=$(grep "amd64:" ${{ matrix.addon }}/build.yaml | awk '{print $2}' | tr -d '"'"'"')
-            BF_AARCH64=$(grep "aarch64:" ${{ matrix.addon }}/build.yaml | awk '{print $2}' | tr -d '"'"'"')
+            BF_AMD64=$(grep "amd64:" ${{ matrix.addon }}/build.yaml | awk '{print $2}' | tr -d '"'"''"')
+            BF_AARCH64=$(grep "aarch64:" ${{ matrix.addon }}/build.yaml | awk '{print $2}' | tr -d '"'"''"')
           fi
-          
+          # Fallback: parse build.json (used by LSIO-based addons like webtop_kde)
+          if [ -z "$BF_AMD64" ] && [ -f ${{ matrix.addon }}/build.json ]; then
+            BF_AMD64=$(python3 -c "import json,sys; d=json.load(open('${{ matrix.addon }}/build.json')); print(d.get('build_from',{}).get('amd64',''))" 2>/dev/null || true)
+            BF_AARCH64=$(python3 -c "import json,sys; d=json.load(open('${{ matrix.addon }}/build.json')); print(d.get('build_from',{}).get('aarch64',''))" 2>/dev/null || true)
+          fi
+
           if [ -z "$BF_AMD64" ]; then BF_AMD64="ghcr.io/home-assistant/amd64-base:latest"; fi
           if [ -z "$BF_AARCH64" ]; then BF_AARCH64="ghcr.io/home-assistant/aarch64-base:latest"; fi
-          
+
           echo "BUILD_FROM_AMD64=$BF_AMD64" >> $GITHUB_ENV
           echo "BUILD_FROM_AARCH64=$BF_AARCH64" >> $GITHUB_ENV
 
