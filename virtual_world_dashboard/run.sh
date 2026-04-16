@@ -55,6 +55,11 @@ HA_URL="$(json_get '.ha_url')"
 HA_LONG_LIVED_TOKEN="$(json_get '.ha_long_lived_token // ""')"
 VWGK_API_KEY="$(json_get '.vwgk_api_key')"
 
+# WP GPT Options
+WP_GPT_LICENSE_KEY="$(json_get '.wp_gpt_license_key // ""')"
+WP_GPT_USER_CODE="$(json_get '.user_code // ""')"
+WP_GPT_API_TOKEN="$(json_get '.token_api // ""')"
+
 mkdir -p "$WP_PATH"
 
 if [[ ! -f "$WP_PATH/index.php" || ! -f "$WP_PATH/wp-includes/version.php" ]]; then
@@ -159,6 +164,11 @@ run_wp option update vwgk_ha_auth_mode "$HA_AUTH_MODE"
 run_wp option update vwgk_ha_url "$HA_URL"
 run_wp option update vwgk_ha_long_lived_token "$HA_LONG_LIVED_TOKEN"
 run_wp option update vwgk_api_key "$VWGK_API_KEY"
+
+# Sync WP GPT
+run_wp option update wp_gpt_license_key "$WP_GPT_LICENSE_KEY"
+run_wp option update wp_gpt_user_code "$WP_GPT_USER_CODE"
+run_wp option update wp_gpt_api_token "$WP_GPT_API_TOKEN"
 
 chown -R www-data:www-data "$WP_PATH"
 

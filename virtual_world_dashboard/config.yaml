@@ -26,6 +26,9 @@ options:
   ha_url: "http://homeassistant:8123"
   ha_long_lived_token: ""
   vwgk_api_key: "my_gateway_secret"
+  wp_gpt_license_key: ""
+  user_code: ""
+  token_api: ""
 schema:
   db_host: str
   db_name: str
@@ -40,6 +43,9 @@ schema:
   ha_url: str
   ha_long_lived_token: password?
   vwgk_api_key: password
+  wp_gpt_license_key: str?
+  user_code: str?
+  token_api: str?
 ports:
   80/tcp: 8081
 ports_description:
