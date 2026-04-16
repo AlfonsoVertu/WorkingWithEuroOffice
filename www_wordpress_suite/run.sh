@@ -54,11 +54,25 @@ if [ "$USE_INTERNAL_DB" == "true" ]; then
     mysql -e "FLUSH PRIVILEGES;"
 fi
 
-# Configure Apache DocumentRoot
-echo "Configuring Apache DocumentRoot..."
+# Configure Apache DocumentRoot and PHP
+echo "Configuring Apache for WordPress..."
 sed -i "s|DocumentRoot \"/var/www/localhost/htdocs\"|DocumentRoot \"${WP_PATH}\"|g" /etc/apache2/httpd.conf
 sed -i "s|<Directory \"/var/www/localhost/htdocs\">|<Directory \"${WP_PATH}\">|g" /etc/apache2/httpd.conf
 sed -i "s|AllowOverride None|AllowOverride All|g" /etc/apache2/httpd.conf
+sed -i "s|DirectoryIndex index.html|DirectoryIndex index.php index.html|g" /etc/apache2/httpd.conf
+
+# Ensure PHP module is loaded and handled
+if ! grep -q "LoadModule php_module" /etc/apache2/httpd.conf; then
+    echo "LoadModule php_module modules/libphp.so" >> /etc/apache2/httpd.conf
+    echo "AddHandler php-script .php" >> /etc/apache2/httpd.conf
+fi
+
+# Fix permissions for the directory
+sed -i "/<Directory \"${WP_PATH}\">/,/<\/Directory>/ s/Require all denied/Require all granted/" /etc/apache2/httpd.conf
+# Alternatively, ensure it has the correct block content if it was empty
+if grep -q '<Directory "/var/www/html">\s*</Directory>' /etc/apache2/httpd.conf; then
+    sed -i '/<Directory "\/var\/www\/html">/a \    Options Indexes FollowSymLinks\n    AllowOverride All\n    Require all granted' /etc/apache2/httpd.conf
+fi
 
 # Start Apache
 echo "Starting Apache server..."
