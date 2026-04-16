@@ -48,19 +48,19 @@ RUN \
         py3-pip \
         python3 \
     \
-    && npm install -g yarn \
+RUN npm install -g yarn \
     \
-    && curl -J -L -o /tmp/nginxproxymanager.tar.gz \
+RUN curl -J -L -o /tmp/nginxproxymanager.tar.gz \
         "https://github.com/NginxProxyManager/nginx-proxy-manager/archive/${NGINX_PROXY_MANAGER_VERSION}.tar.gz" \
     && mkdir /app \
     && tar zxvf \
         /tmp/nginxproxymanager.tar.gz \
         --strip 1 -C /app \
     \
-    && for i in /usr/src/*.patch; do \
+RUN for i in /usr/src/*.patch; do \
         patch -d /app -p 1 < "${i}"; done \
     \
-    && cd /app/frontend \
+RUN cd /app/frontend \
     && yarn install --ignore-engines --network-timeout 100000 \
     && yarn build --ignore-engines \
     && rm -rf node_modules \
@@ -68,19 +68,19 @@ RUN \
     && mkdir -p /opt/nginx-proxy-manager/frontend \
     && cp -r /app/frontend/dist/. /opt/nginx-proxy-manager/frontend/ \
     \
-    && cd /app/backend \
+RUN cd /app/backend \
     && yarn install \
     && rm -rf node_modules \
     && cp -r /app/backend/. /opt/nginx-proxy-manager/ \
     \
     && cp -R /app/global/. /opt/nginx-proxy-manager/global/ \
     \
-    && cd /opt/nginx-proxy-manager \
+RUN cd /opt/nginx-proxy-manager \
     && yarn install \
     && rm -rf /etc/services.d/frontend \
     && rm -rf /opt/nginx-proxy-manager/config \
     \
-    && rm -f -r /etc/nginx \
+RUN rm -f -r /etc/nginx \
     && cp -r /app/docker/rootfs/etc/nginx /etc/nginx \
     && rm -f /etc/nginx/conf.d/dev.conf \
     \
@@ -96,7 +96,7 @@ RUN \
     && mkdir -p \
         /run/nginx \
     \
-    && yarn cache clean \
+RUN yarn cache clean \
     \
     && apk del --purge .build-dependencies \
     \
