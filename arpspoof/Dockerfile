@@ -49,7 +49,9 @@ COPY ha_automodules.sh /ha_automodules.sh
 RUN chmod 744 /ha_automodules.sh && /ha_automodules.sh "$MODULES" && rm /ha_automodules.sh
 
 # Manual apps - install directly with apt (bypassing ha_autoapps.sh which requires 'micro' not available in base)
-RUN apt-get update && apt-get install -yqq --no-install-recommends jq curl iproute2 && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -o Acquire::Retries=10 || apt-get update -o Acquire::Retries=10 \
+    && apt-get install -yqq --no-install-recommends -o Acquire::Retries=10 jq curl iproute2 \
+    && rm -rf /var/lib/apt/lists/*
 
 ################
 # 4 Entrypoint #

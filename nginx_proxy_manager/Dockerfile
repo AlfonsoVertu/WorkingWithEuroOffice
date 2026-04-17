@@ -62,7 +62,7 @@ RUN for i in /usr/src/*.patch; do \
         patch -d /app -p 1 < "${i}"; done
 
 RUN cd /app/frontend \
-    && yarn install --ignore-engines --network-timeout 100000 \
+    && yarn install --ignore-engines --network-timeout 1000000 \
     && yarn build --ignore-engines \
     && rm -rf node_modules \
     \
@@ -70,14 +70,14 @@ RUN cd /app/frontend \
     && cp -r /app/frontend/dist/. /opt/nginx-proxy-manager/frontend/
 
 RUN cd /app/backend \
-    && yarn install \
+    && yarn install --network-timeout 1000000 \
     && rm -rf node_modules \
     && cp -r /app/backend/. /opt/nginx-proxy-manager/ \
     \
     && cp -R /app/global/. /opt/nginx-proxy-manager/global/
 
 RUN cd /opt/nginx-proxy-manager \
-    && yarn install \
+    && yarn install --network-timeout 1000000 \
     && rm -rf /etc/services.d/frontend \
     && rm -rf /opt/nginx-proxy-manager/config
 
