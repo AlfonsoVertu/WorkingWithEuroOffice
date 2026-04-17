@@ -24,8 +24,12 @@ RUN apk add --no-cache \
     mariadb \
     mariadb-server-utils \
     mariadb-client \
-    php83-mysqli \
     php83-pdo_mysql \
+    php83-session \
+    php83-iconv \
+    php83-simplexml \
+    php83-xmlwriter \
+    php83-ctype \
     wget \
     curl \
     jq \

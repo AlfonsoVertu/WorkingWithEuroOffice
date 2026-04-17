@@ -24,7 +24,7 @@ WP_PATH="/var/www/html"
 echo "Starting WWW WordPress Suite..."
 
 # Handle Internal MariaDB
-if [ "$USE_INTERNAL_DB" == "true" ]; then
+if [ "$USE_INTERNAL_DB" = "true" ]; then
     DB_HOST="127.0.0.1"
     MYSQL_DATA_DIR="/data/mysql"
 
@@ -51,32 +51,47 @@ if [ "$USE_INTERNAL_DB" == "true" ]; then
     mysql -e "CREATE DATABASE IF NOT EXISTS \`$DB_NAME\`;"
     mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASS';"
     mysql -e "GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'localhost';"
+    mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'127.0.0.1' IDENTIFIED BY '$DB_PASS';"
+    mysql -e "GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'127.0.0.1';"
     mysql -e "FLUSH PRIVILEGES;"
 fi
 
-# Configure Apache DocumentRoot and PHP
+# Configure Apache for WordPress
 echo "Configuring Apache for WordPress..."
-mkdir -p /var/log/apache2
-ln -sf /dev/stdout /var/log/apache2/access.log
-ln -sf /dev/stderr /var/log/apache2/error.log
 
+# Redirect Apache logs to container stdout/stderr
+mkdir -p /var/log/apache2
+ln -sf /proc/1/fd/1 /var/log/apache2/access.log
+ln -sf /proc/1/fd/2 /var/log/apache2/error.log
+
+# Set DocumentRoot to WordPress path
 sed -i "s|DocumentRoot \"/var/www/localhost/htdocs\"|DocumentRoot \"${WP_PATH}\"|g" /etc/apache2/httpd.conf
 sed -i "s|<Directory \"/var/www/localhost/htdocs\">|<Directory \"${WP_PATH}\">|g" /etc/apache2/httpd.conf
+
+# Enable .htaccess and index.php
 sed -i "s|AllowOverride None|AllowOverride All|g" /etc/apache2/httpd.conf
 sed -i "s|DirectoryIndex index.html|DirectoryIndex index.php index.html|g" /etc/apache2/httpd.conf
 
-# Ensure PHP module is loaded and handled
+# Fix directory permissions: replace "Require all denied" with "Require all granted"
+sed -i 's/Require all denied/Require all granted/g' /etc/apache2/httpd.conf
+
+# Enable mod_rewrite
+sed -i 's/#LoadModule rewrite_module/LoadModule rewrite_module/' /etc/apache2/httpd.conf
+
+# Ensure PHP module is loaded
 if ! grep -q "LoadModule php_module" /etc/apache2/httpd.conf; then
     echo "LoadModule php_module modules/libphp.so" >> /etc/apache2/httpd.conf
     echo "AddHandler php-script .php" >> /etc/apache2/httpd.conf
 fi
 
-# Fix permissions for the directory
-sed -i '/<Directory "\/var\/www\/html">/,/<\/Directory>/ s/Require all denied/Require all granted/' /etc/apache2/httpd.conf
-# Alternatively, ensure it has the correct block content if it was empty
-if grep -q '<Directory "/var/www/html">\s*</Directory>' /etc/apache2/httpd.conf; then
-    sed -i '/<Directory "\/var\/www\/html">/a \    Options Indexes FollowSymLinks\n    AllowOverride All\n    Require all granted' /etc/apache2/httpd.conf
-fi
+# Point ErrorLog and CustomLog to our symlinks
+sed -i 's|ErrorLog logs/error.log|ErrorLog /var/log/apache2/error.log|' /etc/apache2/httpd.conf
+sed -i 's|CustomLog logs/access.log|CustomLog /var/log/apache2/access.log|' /etc/apache2/httpd.conf
+
+# Ensure ServerName is set to suppress warnings
+echo "ServerName localhost" >> /etc/apache2/httpd.conf
+
+echo "Apache configuration complete."
 
 # Start Apache
 echo "Starting Apache server..."
@@ -97,19 +112,25 @@ if [ ! -f "${WP_PATH}/wp-login.php" ]; then
     wp core download --path="${WP_PATH}" --allow-root --quiet
 
     echo "Configuring WordPress..."
+    # Create wp-config.php with reverse proxy support
     wp config create \
         --path="${WP_PATH}" \
         --dbname="${DB_NAME}" \
         --dbuser="${DB_USER}" \
         --dbpass="${DB_PASS}" \
         --dbhost="${DB_HOST}" \
-        --allow-root --quiet --extra-php <<PHP
-if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-    \$_SERVER['HTTPS'] = 'on';
-}
-define('WP_HOME', (isset(\$_SERVER['HTTPS']) && \$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \$_SERVER['HTTP_HOST']);
-define('WP_SITEURL', (isset(\$_SERVER['HTTPS']) && \$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \$_SERVER['HTTP_HOST']);
-PHP
+        --allow-root --quiet
+
+    # Add reverse proxy and dynamic URL support to wp-config.php
+    # Insert before the "That's all" line
+    sed -i "/That's all, stop editing/i\\
+/** Reverse proxy HTTPS detection */\\
+if (isset(\\\$_SERVER['HTTP_X_FORWARDED_PROTO']) \&\& \\\$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {\\
+    \\\$_SERVER['HTTPS'] = 'on';\\
+}\\
+/** Dynamic site URL based on request */\\
+define('WP_HOME', (isset(\\\$_SERVER['HTTPS']) \&\& \\\$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \\\$_SERVER['HTTP_HOST']);\\
+define('WP_SITEURL', (isset(\\\$_SERVER['HTTPS']) \&\& \\\$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \\\$_SERVER['HTTP_HOST']);" "${WP_PATH}/wp-config.php"
 
     echo "Installing WordPress..."
     wp core install \
@@ -129,9 +150,25 @@ PHP
     fi
 
     echo "WordPress Suite ready. Plugins installed — activate from WP Admin."
+else
+    echo "WordPress already installed, ensuring wp-config.php has proxy support..."
+    # On subsequent startups, ensure proxy support is present
+    if ! grep -q "HTTP_X_FORWARDED_PROTO" "${WP_PATH}/wp-config.php"; then
+        sed -i "/That's all, stop editing/i\\
+/** Reverse proxy HTTPS detection */\\
+if (isset(\\\$_SERVER['HTTP_X_FORWARDED_PROTO']) \&\& \\\$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {\\
+    \\\$_SERVER['HTTPS'] = 'on';\\
+}\\
+/** Dynamic site URL based on request */\\
+define('WP_HOME', (isset(\\\$_SERVER['HTTPS']) \&\& \\\$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \\\$_SERVER['HTTP_HOST']);\\
+define('WP_SITEURL', (isset(\\\$_SERVER['HTTPS']) \&\& \\\$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \\\$_SERVER['HTTP_HOST']);" "${WP_PATH}/wp-config.php"
+    fi
 fi
 
 # Monitor processes
 echo "Processes running. Monitoring..."
-wait -n ${MARIADB_PID} ${APACHE_PID}
-
+if [ -n "$MARIADB_PID" ]; then
+    wait -n $MARIADB_PID $APACHE_PID
+else
+    wait $APACHE_PID
+fi
