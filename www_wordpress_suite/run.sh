@@ -107,6 +107,8 @@ if [ ! -f "${WP_PATH}/wp-login.php" ]; then
 if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
     \$_SERVER['HTTPS'] = 'on';
 }
+define('WP_HOME', (isset(\$_SERVER['HTTPS']) && \$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \$_SERVER['HTTP_HOST']);
+define('WP_SITEURL', (isset(\$_SERVER['HTTPS']) && \$_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . \$_SERVER['HTTP_HOST']);
 PHP
 
     echo "Installing WordPress..."
